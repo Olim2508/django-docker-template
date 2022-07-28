@@ -1,0 +1,56 @@
+django==3.2.11
+django-filter==21.1
+
+# for PostgreSql database
+psycopg2==2.9.3
+
+# Ddos defender: required redis
+django-defender==0.9.1
+
+# redis
+redis==4.1.3
+
+# for RestAPI
+djangorestframework==3.13.1
+drf-yasg==1.20.0 # Swagger
+
+# for auth system
+django-allauth==0.47.0
+dj-rest-auth==2.2.4
+djangorestframework-simplejwt==5.0.0
+
+# For backend working
+celery==4.4.6
+pyamqp==0.1.0.7
+
+# for react
+django-cors-headers==3.11.0
+
+
+# Cashe Support
+django-cacheops==6.0
+django-redis==5.2.0
+
+# ImageField
+# pillow==8.2.0
+
+# PhoneNumberField
+django-phonenumber-field==5.2.0
+phonenumbers==8.12.21
+
+# Translation
+django-rosetta==0.9.8
+
+# Monitoring System
+sentry-sdk==1.5.5
+
+# Countries List
+django-countries==7.2.1
+
+# MoneyField
+django-money==1.3.1
+
+# MicroService Requests
+django-microservice-request==0.1.4.6
+
+
