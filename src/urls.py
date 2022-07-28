@@ -14,12 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
 from django.urls import path, include
+from django.views.generic import RedirectView
+
 from .yasg import urlpatterns as swagger_url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', login_required(RedirectView.as_view(pattern_name='admin:index'))),
     path('auth/', include("auth_app.urls")),
+    path('api/', include('rest_framework.urls')),
 ]
 
 urlpatterns += swagger_url

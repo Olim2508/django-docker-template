@@ -1,6 +1,9 @@
+from django.utils import timezone
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from .services import SignUpService
+from dj_rest_auth import serializers as auth_serializers
+
 
 User = get_user_model()
 
@@ -41,6 +44,24 @@ class SignUpSerializer(serializers.Serializer):
         User.object.create(**self.validated_data)
 
 
+class LogInSerializer(auth_serializers.LoginSerializer):
+    username = None
+    email = serializers.EmailField()
 
+    def validate(self, attrs):
+        email: str = attrs.get('email')
+        password: str = attrs.pop('password')
+        user = self._validate_email(email, password)
+        if not user:
+            user = SignUpService.get_user_or_none(email)
+            if not user:
+                msg = {'email': error_messages['wrong_credentials']}
+                raise serializers.ValidationError(msg)
+
+        user.last_login = timezone.now()
+        user.save(update_fields=['last_login'])
+
+        attrs['user'] = user
+        return attrs
 
 
