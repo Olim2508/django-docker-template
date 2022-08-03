@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', login_required(RedirectView.as_view(pattern_name='admin:index'))),
     path('auth/', include("auth_app.urls")),
+    path('main/', include("main.urls")),
     path('api/', include('rest_framework.urls')),
 ]
 

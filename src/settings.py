@@ -43,7 +43,8 @@ INSTALLED_APPS = [
 ]
 
 LOCAL_APPS = [
-    'auth_app.apps.AuthAppConfig'
+    'auth_app.apps.AuthAppConfig',
+    'main.apps.MainConfig'
 ]
 
 THIRD_PARTY_APPS = [
