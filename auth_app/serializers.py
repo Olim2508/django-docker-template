@@ -41,23 +41,21 @@ class SignUpSerializer(serializers.Serializer):
     def save(self):
         self.validated_data["password"] = self.validated_data.pop("password1")
         del self.validated_data["password2"]
-        User.object.create(**self.validated_data)
+        user = User.object.create_user(**self.validated_data)
+        return user
 
 
 class LogInSerializer(auth_serializers.LoginSerializer):
     username = None
     email = serializers.EmailField()
 
-    def validate(self, attrs):
+    def validate(self, attrs: dict):
         email: str = attrs.get('email')
         password: str = attrs.pop('password')
         user = self._validate_email(email, password)
         if not user:
-            user = SignUpService.get_user_or_none(email)
-            if not user:
-                msg = {'email': error_messages['wrong_credentials']}
-                raise serializers.ValidationError(msg)
-
+            msg = {'email': error_messages['wrong_credentials']}
+            raise serializers.ValidationError(msg)
         user.last_login = timezone.now()
         user.save(update_fields=['last_login'])
 
