@@ -1,8 +1,6 @@
-from django.shortcuts import render
-from django.contrib.auth import logout as django_logout, get_user_model
-from rest_framework import viewsets
-from rest_framework.generics import CreateAPIView, RetrieveAPIView, GenericAPIView
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from django.contrib.auth import get_user_model
+from rest_framework.generics import CreateAPIView
+from rest_framework.permissions import AllowAny
 from . import serializers
 from dj_rest_auth import views as auth_views
 
