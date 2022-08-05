@@ -1,2 +1,7 @@
 .idea
 db.sqlite3
+web/media/*
+.cache
+.vscode
+__pycache__
+.ash_history

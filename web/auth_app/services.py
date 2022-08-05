@@ -1,11 +1,18 @@
 import re
-from typing import Tuple, Union
+from typing import Tuple, Union, TYPE_CHECKING
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.core.mail import send_mail
 from rest_framework.response import Response
+from rest_framework.reverse import reverse_lazy
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.status import HTTP_401_UNAUTHORIZED, HTTP_500_INTERNAL_SERVER_ERROR, HTTP_200_OK
 from rest_framework_simplejwt.exceptions import TokenError
+from src.celery import app
+
+if TYPE_CHECKING:
+    from rest_framework.request import Request
+
 
 User = get_user_model()
 
@@ -65,4 +72,33 @@ class SignUpService:
         return response
 
 
+class CeleryService:
 
+    @staticmethod
+    def send_email_confirm(user: User, token: str, request: "Request") -> None:
+        path = "auth_app:sign_up_verify"
+        url = CeleryService._get_confirmation_url(path, token, request)
+        kwargs = {
+            'to_email': user.email,
+            'content': {
+                'user': user.get_full_name(),
+                'activate_url': url,
+            }
+        }
+        app.send_task('auth_app.tasks.send_verification_email', kwargs=kwargs)
+
+    @staticmethod
+    def _get_confirmation_url(path: str, token: str, request: "Request") -> str:
+        url = reverse_lazy(path)
+        return "http://localhost:8010" + str(url) + f"?token={token}"
+
+
+def send_email(subject, template, content, to_email):
+    html_content = template.render(content)
+    send_mail(
+        subject=subject,
+        message='',
+        from_email=None,
+        recipient_list=[to_email] if isinstance(to_email, str) else to_email,
+        html_message=html_content
+    )

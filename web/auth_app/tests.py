@@ -4,7 +4,7 @@ from django.test import tag
 from rest_framework import status
 from rest_framework.reverse import reverse_lazy
 from rest_framework.test import APITestCase
-from auth_app.serializers import error_messages
+from web.auth_app.serializers import error_messages
 
 User = get_user_model()
 
