@@ -12,12 +12,30 @@ services:
       - "8010:8000"
     env_file:
       - docker/dev/env/.env.dev
+    depends_on:
+      - db
+      - redis
   db:
     image: postgres:13.0-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - docker/dev/env/.db.env
+  celery:
+    build:
+      context: .
+      dockerfile: docker/dev/web/Dockerfile
+    command: celery -A src worker -l info
+    volumes:
+      - ./web/:/usr/src/web/
+    env_file:
+      - docker/dev/env/.env.dev
+    depends_on:
+      - web
+      - redis
+  redis:
+    image: "redis:alpine"
+
 
 volumes:
   postgres_data:

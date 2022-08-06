@@ -4,3 +4,4 @@ web/media/*
 .cache
 .vscode
 __pycache__
+.ash_history

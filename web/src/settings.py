@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 from .additional_settings.jwt_settings import *
+from .additional_settings.celery_settings import *
 # from .additional_settings.swagger_settings import *
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
