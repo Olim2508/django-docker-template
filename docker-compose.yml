@@ -30,6 +30,7 @@ services:
       - ./web/:/usr/src/web/
     env_file:
       - docker/dev/env/.env.dev
+      - docker/dev/env/.db.env
     depends_on:
       - web
       - redis
