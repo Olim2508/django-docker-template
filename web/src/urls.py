@@ -28,6 +28,7 @@ urlpatterns = [
     path('auth/', include("auth_app.urls")),
     path('main/', include("main.urls")),
     path('api/', include('rest_framework.urls')),
+    path('accounts/', include('allauth.urls')),
 ]
 
 urlpatterns += swagger_url
