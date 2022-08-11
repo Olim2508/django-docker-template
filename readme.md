@@ -28,6 +28,9 @@
 ##### For testing mail backend you can use MailHog service
     docker-compose -f docker-compose.yml -f docker/modules/mailhog.yml up -d --build
 
+##### To create superuser run the command:
+    docker-compose exec web python manage.py createsuperuser
+
 <b>Don't forget to set SMTP mail backend in settings</b>
 
 
