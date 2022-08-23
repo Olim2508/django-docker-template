@@ -8,7 +8,7 @@
 * Celery worker
 * Redis service as message broker for queue
 * Swagger in Django Admin Panel
-* Redefined default User model (main.models.py)
+* Redefined default User model (auth_app.models.py)
 * MailHog integration
 
 ### How to use:
